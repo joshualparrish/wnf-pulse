@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WNF Weekly Manager Pulse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05060a; --bg-2: #0a0c12;
+    --panel: #0d0f15; --panel-2: #11141c;
+    --panel-edge: #1d2230;
+    --ink: #f5f5f7; --ink-dim: #9aa0b0; --ink-faint: #5a6271;
+    --magenta: #ff2bd6; --pink: #FF3EC8; --violet: #b026ff;
+    --orange: #FFA33A; --green: #4ade80; --red: #ef4444;
+    --grad-cta: linear-gradient(135deg, #ff2bd6 0%, #b026ff 100%);
+    --grad-humans: linear-gradient(120deg, #FF3EC8, #b026ff);
+    --grad-lab:    linear-gradient(120deg, #b026ff, #4ade80);
+    --grad-truth:  linear-gradient(120deg, #FFA33A, #ef4444);
+    --grad-hero-m: linear-gradient(120deg, #FF3EC8, #FFA33A);
+    --grad-hero-c: linear-gradient(120deg, #FFA33A, #FF3EC8);
+    --glow-pink: 0 10px 30px -10px rgba(255,43,214,0.45);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background:
+      radial-gradient(ellipse at top right, rgba(176,38,255,0.10), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(255,43,214,0.08), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 15px; line-height: 1.55;
+  }
+  h1, h2 { font-family: "Archivo Black", Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 400; margin: 0; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .brand-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
+  .wnf-mark {
+    display: inline-block; font-family: "Archivo Black", Impact, sans-serif;
+    background: var(--grad-cta); color: #fff; padding: 6px 12px;
+    border-radius: 6px; font-size: 18px; letter-spacing: -0.02em;
+    box-shadow: var(--glow-pink);
+  }
+  .brand-tag {
+    color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+
+  .switcher {
+    display: flex; gap: 8px; margin-bottom: 28px;
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 10px; padding: 6px;
+  }
+  .switcher button {
+    flex: 1; background: transparent; border: none;
+    color: var(--ink-dim); font-family: "Archivo Black", Impact, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px;
+    padding: 14px 18px; border-radius: 7px; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .switcher button:hover { color: var(--ink); }
+  .switcher button.active { background: var(--grad-cta); color: #fff; box-shadow: var(--glow-pink); }
+
+  .hero {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 14px; padding: 28px; margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; top: -50%; right: -10%;
+    width: 60%; height: 200%; background: var(--grad-cta);
+    opacity: 0.08; filter: blur(60px); pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 32px; line-height: 1.1; margin-bottom: 8px;
+    background: var(--grad-hero-m);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  body.cafe .pane#pane-cafe .hero h1 {
+    background: var(--grad-hero-c);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .sub { color: var(--ink-dim); font-size: 14px; font-family: "JetBrains Mono", monospace; }
+  .hero .rules {
+    margin-top: 18px; padding-top: 18px;
+    border-top: 1px dashed var(--panel-edge);
+    color: var(--ink-dim); font-size: 13px;
+  }
+  .hero .rules strong {
+    color: var(--orange); font-family: "Archivo Black", Impact, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px;
+  }
+  .who-input {
+    margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--panel-edge); border-radius: 8px;
+  }
+  .who-input label { color: var(--ink-faint); font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .who-input input { flex: 1; min-width: 180px; padding: 8px 10px; background: var(--bg); border: 1px solid var(--panel-edge); color: var(--ink); border-radius: 6px; font-family: inherit; font-size: 13px; }
+
+  .lastweek {
+    background: var(--panel-2); border: 1px solid var(--panel-edge);
+    border-left: 3px solid var(--violet); border-radius: 10px;
+    padding: 16px 20px; margin-bottom: 24px; font-size: 13px;
+  }
+  .lastweek .label {
+    font-family: "Archivo Black", Impact, sans-serif; text-transform: uppercase;
+    font-size: 10px; letter-spacing: 0.18em; color: var(--violet); margin-bottom: 6px;
+  }
+  .lastweek .empty { color: var(--ink-faint); font-style: italic; font-size: 13px; }
+
+  .block {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 14px; padding: 24px 26px; margin-bottom: 18px;
+  }
+  .block-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--panel-edge);
+  }
+  .block-num { font-family: "Archivo Black", Impact, sans-serif; font-size: 11px; letter-spacing: 0.2em; color: var(--ink-faint); }
+  .block-title { font-size: 22px; letter-spacing: 0.04em; }
+  .block.humans .block-title { background: var(--grad-humans); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .block.lab .block-title    { background: var(--grad-lab);    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .block.truth .block-title  { background: var(--grad-truth);  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .q { margin-bottom: 20px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-label { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; }
+  .q-num { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--pink); font-weight: 600; flex-shrink: 0; }
+  .q-text { font-weight: 600; color: var(--ink); font-size: 15px; }
+  .q-hint { margin-left: 28px; color: var(--ink-faint); font-size: 12px; font-style: italic; margin-bottom: 8px; }
+  textarea, input[type="text"], select {
+    width: 100%; background: var(--bg-2); border: 1px solid var(--panel-edge);
+    border-radius: 8px; color: var(--ink); font-family: "Space Grotesk", sans-serif;
+    font-size: 14px; padding: 12px 14px; resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea { min-height: 60px; }
+  textarea:focus, input:focus, select:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,43,214,0.15); }
+
+  .commit-row { display: flex; gap: 10px; align-items: stretch; }
+  .commit-row select { min-width: 130px; }
+
+  .footer {
+    margin-top: 28px; padding: 20px 24px;
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 14px; display: flex; justify-content: space-between;
+    align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .footer .note { color: var(--ink-dim); font-size: 12px; font-family: "JetBrains Mono", monospace; }
+  .submit-btn {
+    background: var(--grad-cta); border: none; color: #fff;
+    font-family: "Archivo Black", Impact, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.1em; font-size: 14px; padding: 14px 28px;
+    border-radius: 8px; cursor: pointer; box-shadow: var(--glow-pink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 36px -10px rgba(255,43,214,0.6); }
+  .submit-btn:disabled { opacity: 0.6; cursor: wait; }
+
+  .pane { display: none; }
+  .pane.active { display: block; }
+
+  .success {
+    display: none; background: var(--panel); border: 1px solid var(--green);
+    border-left: 4px solid var(--green); border-radius: 14px;
+    padding: 40px 32px; text-align: center;
+  }
+  .success.show { display: block; }
+  .success h2 {
+    background: linear-gradient(120deg, var(--green), var(--violet));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px; margin-bottom: 12px;
+  }
+  .success p { color: var(--ink-dim); font-size: 15px; line-height: 1.6; margin: 0; }
+  .success .receipt { margin-top: 18px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .error {
+    display: none; background: rgba(239,68,68,0.1);
+    border: 1px solid var(--red); border-radius: 10px;
+    padding: 14px 18px; margin-top: 14px; color: var(--red);
+    font-size: 13px;
+  }
+  .error.show { display: block; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 24px; }
+    .block-title { font-size: 18px; }
+    .footer { flex-direction: column; align-items: stretch; }
+    .submit-btn { width: 100%; }
+    .commit-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-bar">
+    <span class="wnf-mark">WNF</span>
+    <span class="brand-tag">// Weekly Manager Pulse · v2</span>
+  </div>
+
+  <div class="switcher">
+    <button class="active" data-pane="market">WNF Market</button>
+    <button data-pane="cafe">WNF Café</button>
+  </div>
+
+  <!-- ============ MARKET PANE ============ -->
+  <div class="pane active" id="pane-market">
+    <form class="form" data-team="Market">
+      <div class="hero">
+        <h1>Weekly Pulse — Market</h1>
+        <div class="sub">For Rachel · Sam · Tyler</div>
+        <div class="rules">
+          <strong>House rules</strong>&nbsp; Be honest. Be specific. Names, not roles. Due Tuesday 8am. Monday-night ping if not in.
+        </div>
+        <div class="who-input">
+          <label>Your name</label>
+          <input type="text" name="name" required placeholder="Rachel">
+          <label>Your email</label>
+          <input type="text" name="email" required placeholder="you@gmail.com">
+        </div>
+      </div>
+
+      <div class="lastweek">
+        <div class="label">↶ Last week you said you'd…</div>
+        <div class="empty">— pulled from your last submission once you've sent at least one —</div>
+      </div>
+
+      <div class="block humans">
+        <div class="block-head"><span class="block-num">BLOCK 01</span><h2 class="block-title">The Humans</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q1</span><span class="q-text">STAR of the week — name, what they did, did you tell them in person</span></div>
+          <textarea name="q1_star" placeholder="Name: ___ · Did: ___ · Told them: Y / N"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q2</span><span class="q-text">DRIFTER of the week — name, what's draining the team, what you're doing about it</span></div>
+          <div class="q-hint">No drifter = write "none" and stand behind it.</div>
+          <textarea name="q2_drifter" placeholder="Name: ___ · Pattern: ___ · Action: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q3</span><span class="q-text">Customer moment — one best, one worst (name the staff)</span></div>
+          <textarea name="q3_customer" placeholder="Best: ___ (staff: ___) · Worst: ___ (staff: ___)"></textarea>
+        </div>
+      </div>
+
+      <div class="block lab">
+        <div class="block-head"><span class="block-num">BLOCK 02</span><h2 class="block-title">The Lab</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q4</span><span class="q-text">Experiment / change you shipped this week</span></div>
+          <div class="q-hint">A new display, a new flow, a new SOP, a new conversation pattern. Something you tried. Even small.</div>
+          <textarea name="q4_experiment" placeholder="What I shipped: ___ · Early read: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q5</span><span class="q-text">Where did a process, system, or tool fail you this week</span></div>
+          <div class="q-hint">Not people. The system. OrderDog, WhenIWork, a missing SOP.</div>
+          <textarea name="q5_system_fail" placeholder="What broke: ___ · What it cost: ___"></textarea>
+        </div>
+      </div>
+
+      <div class="block truth">
+        <div class="block-head"><span class="block-num">BLOCK 03</span><h2 class="block-title">The Truth</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q6</span><span class="q-text">Last week's commitment — did you do it?</span></div>
+          <div class="q-hint">Reference the callout at the top. If no, why not. No spin.</div>
+          <div class="commit-row">
+            <select name="q6_commit_status">
+              <option value="">— pick —</option>
+              <option value="done">Done</option>
+              <option value="partial">Partial</option>
+              <option value="missed">Missed</option>
+              <option value="na">N/A — no commitment</option>
+            </select>
+            <textarea name="q6_commit_notes" placeholder="Receipt / why not / what changed"></textarea>
+          </div>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q7</span><span class="q-text">The conversation or decision you're avoiding right now</span></div>
+          <div class="q-hint">If "nothing" — re-read the question.</div>
+          <textarea name="q7_avoiding" placeholder="What I'm avoiding: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q8</span><span class="q-text">ONE thing Joshua needs to know + ONE blocker he can remove</span></div>
+          <div class="q-hint">This becomes next week's commitment. Choose wisely.</div>
+          <textarea name="q8_next_commitment" placeholder="Needs to know: ___ · Blocker: ___"></textarea>
+        </div>
+      </div>
+
+      <div class="error"></div>
+      <div class="footer">
+        <div class="note">Lands in Joshua's docket sheet instantly.</div>
+        <button type="submit" class="submit-btn">Send Pulse</button>
+      </div>
+    </form>
+    <div class="success"></div>
+  </div>
+
+  <!-- ============ CAFÉ PANE ============ -->
+  <div class="pane" id="pane-cafe">
+    <form class="form" data-team="Café">
+      <div class="hero">
+        <h1>Weekly Pulse — Café</h1>
+        <div class="sub">For Angela · Will · Noah · Dylan</div>
+        <div class="rules">
+          <strong>House rules</strong>&nbsp; Be honest. Be specific. Names, not roles. Due Tuesday 8am. Monday-night ping if not in.
+        </div>
+        <div class="who-input">
+          <label>Your name</label>
+          <input type="text" name="name" required placeholder="Angela">
+          <label>Your email</label>
+          <input type="text" name="email" required placeholder="you@gmail.com">
+        </div>
+      </div>
+
+      <div class="lastweek">
+        <div class="label">↶ Last week you said you'd…</div>
+        <div class="empty">— pulled from your last submission once you've sent at least one —</div>
+      </div>
+
+      <div class="block humans">
+        <div class="block-head"><span class="block-num">BLOCK 01</span><h2 class="block-title">The Humans</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q1</span><span class="q-text">STAR of the week — name, what they did, did you tell them in person</span></div>
+          <textarea name="q1_star" placeholder="Name: ___ · Did: ___ · Told them: Y / N"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q2</span><span class="q-text">DRIFTER of the week — name, what's draining the team, what you're doing about it</span></div>
+          <div class="q-hint">No drifter = write "none" and stand behind it.</div>
+          <textarea name="q2_drifter" placeholder="Name: ___ · Pattern: ___ · Action: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q3</span><span class="q-text">Customer / ticket moment — one best, one worst (name the staff)</span></div>
+          <textarea name="q3_customer" placeholder="Best: ___ (staff: ___) · Worst: ___ (staff: ___)"></textarea>
+        </div>
+      </div>
+
+      <div class="block lab">
+        <div class="block-head"><span class="block-num">BLOCK 02</span><h2 class="block-title">The Lab</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q4</span><span class="q-text">Experiment / change you shipped this week</span></div>
+          <div class="q-hint">A menu test, a new prep flow, a station change, a service tweak. Something you tried.</div>
+          <textarea name="q4_experiment" placeholder="What I shipped: ___ · Early read: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q5</span><span class="q-text">Where did a process, system, or tool fail you this week</span></div>
+          <div class="q-hint">Not people. The system. Toast, prep timing, vendor delivery, a broken SOP.</div>
+          <textarea name="q5_system_fail" placeholder="What broke: ___ · What it cost: ___"></textarea>
+        </div>
+      </div>
+
+      <div class="block truth">
+        <div class="block-head"><span class="block-num">BLOCK 03</span><h2 class="block-title">The Truth</h2></div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q6</span><span class="q-text">Last week's commitment — did you do it?</span></div>
+          <div class="q-hint">Reference the callout at the top. If no, why not. No spin.</div>
+          <div class="commit-row">
+            <select name="q6_commit_status">
+              <option value="">— pick —</option>
+              <option value="done">Done</option>
+              <option value="partial">Partial</option>
+              <option value="missed">Missed</option>
+              <option value="na">N/A — no commitment</option>
+            </select>
+            <textarea name="q6_commit_notes" placeholder="Receipt / why not / what changed"></textarea>
+          </div>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q7</span><span class="q-text">The conversation or decision you're avoiding right now</span></div>
+          <div class="q-hint">If "nothing" — re-read the question.</div>
+          <textarea name="q7_avoiding" placeholder="What I'm avoiding: ___"></textarea>
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q8</span><span class="q-text">ONE thing Joshua needs to know + ONE blocker he can remove</span></div>
+          <div class="q-hint">This becomes next week's commitment. Choose wisely.</div>
+          <textarea name="q8_next_commitment" placeholder="Needs to know: ___ · Blocker: ___"></textarea>
+        </div>
+      </div>
+
+      <div class="error"></div>
+      <div class="footer">
+        <div class="note">Lands in Joshua's docket sheet instantly.</div>
+        <button type="submit" class="submit-btn">Send Pulse</button>
+      </div>
+    </form>
+    <div class="success"></div>
+  </div>
+
+</div>
+
+<script>
+  // === CONFIG — both values get replaced after Apps Script web app is deployed ===
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyP6zcOGc6WgJ_OmLGocHvXKCW7u7xFbGRzVDqd_50v0DsqlTR13IcjVXvitZWn9lOU/exec';
+  const SUBMIT_TOKEN = 'ce2c723acf315c63137138196d25aa1e';
+
+  // Pre-fill from URL params: ?m=name&t=team&e=email
+  const params = new URLSearchParams(window.location.search);
+  const urlName  = params.get('m') || '';
+  const urlTeam  = params.get('t') || '';
+  const urlEmail = params.get('e') || '';
+
+  function selectPane(team) {
+    document.querySelectorAll('.switcher button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    const paneKey = team.toLowerCase().indexOf('caf') === 0 ? 'cafe' : 'market';
+    document.querySelector(`.switcher button[data-pane="${paneKey}"]`).classList.add('active');
+    document.getElementById('pane-' + paneKey).classList.add('active');
+    document.body.classList.remove('market','cafe');
+    document.body.classList.add(paneKey);
+  }
+  document.querySelectorAll('.switcher button').forEach(btn => {
+    btn.addEventListener('click', () => selectPane(btn.dataset.pane));
+  });
+  selectPane(urlTeam || 'market');
+
+  // Pre-fill name/email in the active pane
+  if (urlName || urlEmail) {
+    document.querySelectorAll('.pane.active input[name="name"]').forEach(el => {
+      el.value = urlName.charAt(0).toUpperCase() + urlName.slice(1);
+    });
+    document.querySelectorAll('.pane.active input[name="email"]').forEach(el => {
+      el.value = urlEmail;
+    });
+  }
+
+  // Form submit -> POST to Apps Script web app
+  document.querySelectorAll('.form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      const errBox = form.querySelector('.error');
+      errBox.classList.remove('show');
+      btn.disabled = true; btn.textContent = 'Sending…';
+
+      const data = { token: SUBMIT_TOKEN, team: form.dataset.team };
+      new FormData(form).forEach((v, k) => { data[k] = v; });
+
+      try {
+        if (API_URL.indexOf('APPS_SCRIPT') >= 0) {
+          throw new Error('Form not configured yet. Tell Joshua to paste the Apps Script Web App URL.');
+        }
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          mode: 'no-cors',  // Apps Script web apps require this for cross-origin
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+        // no-cors means we can't read response; assume success if fetch resolved
+        showSuccess(form, data.team, data.name);
+      } catch (err) {
+        errBox.textContent = err.message || 'Network error. Try again.';
+        errBox.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Send Pulse';
+      }
+    });
+  });
+
+  function showSuccess(form, team, name) {
+    const pane = form.closest('.pane');
+    const success = pane.querySelector('.success');
+    success.innerHTML = `
+      <h2>Pulse Received</h2>
+      <p>Thanks, ${escapeHtml(name || 'team')}. Your ${escapeHtml(team)} submission landed in Joshua's docket sheet.</p>
+      <p class="receipt">// See you in the Tuesday meeting.</p>
+    `;
+    form.style.display = 'none';
+    success.classList.add('show');
+    success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
