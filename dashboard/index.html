@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WNF Pulse Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#05060a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05060a; --bg-2: #0a0c12;
+    --panel: #0d0f15; --panel-2: #11141c;
+    --panel-edge: #1d2230;
+    --ink: #f5f5f7; --ink-dim: #9aa0b0; --ink-faint: #5a6271;
+    --magenta: #ff2bd6; --pink: #FF3EC8; --violet: #b026ff;
+    --orange: #FFA33A; --green: #4ade80; --red: #ef4444;
+    --grad-cta: linear-gradient(135deg, #ff2bd6 0%, #b026ff 100%);
+    --grad-good: linear-gradient(120deg, #4ade80, #b026ff);
+    --grad-warn: linear-gradient(120deg, #FFA33A, #ef4444);
+    --glow-pink: 0 10px 30px -10px rgba(255,43,214,0.45);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background:
+      radial-gradient(ellipse at top right, rgba(176,38,255,0.10), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(255,43,214,0.08), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 15px; line-height: 1.5;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-family: "Archivo Black", Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 400; margin: 0; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 20px 14px 60px; }
+
+  .brand-bar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .wnf-mark {
+    display: inline-block; font-family: "Archivo Black", Impact, sans-serif;
+    background: var(--grad-cta); color: #fff; padding: 5px 10px;
+    border-radius: 6px; font-size: 16px; letter-spacing: -0.02em;
+    box-shadow: var(--glow-pink);
+  }
+  .brand-tag {
+    color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .refresh-btn {
+    margin-left: auto; background: var(--panel); border: 1px solid var(--panel-edge);
+    color: var(--ink-dim); font-size: 11px; padding: 6px 10px; border-radius: 6px;
+    font-family: "JetBrains Mono", monospace; letter-spacing: 0.1em;
+    cursor: pointer; text-transform: uppercase;
+  }
+  .refresh-btn:active { background: var(--panel-2); }
+
+  .hero {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 12px; padding: 18px 18px; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: 22px; line-height: 1.1; margin-bottom: 6px;
+    background: var(--grad-cta);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .meta {
+    color: var(--ink-dim); font-size: 12px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .hero .count {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--panel-edge);
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .hero .count .num {
+    font-family: "Archivo Black", Impact, sans-serif;
+    font-size: 30px; letter-spacing: 0.02em;
+  }
+  .hero .count .total { color: var(--ink-faint); font-size: 14px; }
+  .hero .count.good .num { color: var(--green); }
+  .hero .count.warn .num { color: var(--orange); }
+
+  .team-block {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 12px; padding: 14px 14px; margin-bottom: 12px;
+  }
+  .team-head {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--panel-edge);
+    margin-bottom: 10px;
+  }
+  .team-name {
+    font-family: "Archivo Black", Impact, sans-serif;
+    font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .team-name.market { color: var(--pink); }
+  .team-name.cafe   { color: var(--orange); }
+  .team-time {
+    font-family: "JetBrains Mono", monospace; font-size: 10px;
+    color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .team-count {
+    margin-left: auto; font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+  }
+  .team-count.good { color: var(--green); }
+  .team-count.warn { color: var(--orange); }
+
+  .mgr-card {
+    background: var(--bg-2); border: 1px solid var(--panel-edge);
+    border-left: 3px solid var(--panel-edge);
+    border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+  }
+  .mgr-card.submitted { border-left-color: var(--green); }
+  .mgr-card.missing { border-left-color: var(--red); }
+  .mgr-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; cursor: pointer;
+    min-height: 44px;
+    user-select: none;
+  }
+  .mgr-row:active { background: var(--panel-2); }
+  .mgr-status {
+    font-weight: 600; font-size: 14px; flex-shrink: 0;
+    width: 16px;
+  }
+  .mgr-status.ok { color: var(--green); }
+  .mgr-status.no { color: var(--red); }
+  .mgr-name { font-weight: 600; color: var(--ink); font-size: 14px; flex: 1; }
+  .mgr-source {
+    color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: 0.05em;
+  }
+  .mgr-toggle {
+    color: var(--ink-faint); font-size: 13px;
+    transition: transform 0.2s;
+  }
+  .mgr-card.open .mgr-toggle { transform: rotate(90deg); }
+
+  .mgr-body { display: none; padding: 4px 14px 14px; }
+  .mgr-card.open .mgr-body { display: block; }
+  .answer {
+    padding: 10px 0;
+    border-top: 1px solid var(--panel-edge);
+  }
+  .answer:first-child { border-top: none; }
+  .answer-label {
+    color: var(--pink); font-family: "JetBrains Mono", monospace;
+    font-size: 11px; font-weight: 600; margin-bottom: 4px;
+  }
+  .answer-text {
+    color: var(--ink); font-size: 13px; line-height: 1.5;
+    white-space: pre-wrap; word-wrap: break-word;
+  }
+  .answer.empty .answer-text {
+    color: var(--ink-faint); font-style: italic;
+  }
+
+  .loading, .error {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 12px; padding: 30px; text-align: center;
+    color: var(--ink-dim); font-size: 14px;
+  }
+  .error { border-color: var(--red); color: var(--red); }
+
+  .footer {
+    margin-top: 18px; text-align: center;
+    color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  @media (min-width: 600px) {
+    .wrap { padding: 32px 24px 60px; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-bar">
+    <span class="wnf-mark">WNF</span>
+    <span class="brand-tag">// Pulse Dashboard ¬∑ Live</span>
+    <button class="refresh-btn" id="refresh">‚Üª Refresh</button>
+  </div>
+
+  <div id="content">
+    <div class="loading">Loading the pulse‚Ä¶</div>
+  </div>
+
+  <div class="footer">
+    // Live data from WNF Pulse Tracker ¬∑ pull-to-refresh
+  </div>
+
+</div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbyP6zcOGc6WgJ_OmLGocHvXKCW7u7xFbGRzVDqd_50v0DsqlTR13IcjVXvitZWn9lOU/exec';
+const TOKEN = 'ce2c723acf315c63137138196d25aa1e';
+
+const Q_LABELS = {
+  Q1_Star: 'Q1 ¬∑ STAR',
+  Q2_Drifter: 'Q2 ¬∑ DRIFTER',
+  Q3_Customer: 'Q3 ¬∑ CUSTOMER',
+  Q4_Experiment: 'Q4 ¬∑ EXPERIMENT',
+  Q5_SystemFail: 'Q5 ¬∑ SYSTEM FAIL',
+  Q6_Commitment_Status: 'Q6a ¬∑ LAST COMMITMENT',
+  Q6_Commitment_Notes: 'Q6b ¬∑ NOTES',
+  Q7_Avoiding: 'Q7 ¬∑ AVOIDING',
+  Q8_NextCommitment: 'Q8 ¬∑ NEXT COMMITMENT',
+};
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function isEmpty(v) {
+  if (v == null) return true;
+  const s = String(v).trim().toLowerCase();
+  return !s || s === 'na' || s === 'n/a' || s === '-';
+}
+
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+async function load() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<div class="loading">Loading the pulse‚Ä¶</div>';
+
+  try {
+    const url = API_URL + '?action=list&token=' + encodeURIComponent(TOKEN) + '&_=' + Date.now();
+    const res = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'API error');
+    render(data);
+  } catch (err) {
+    content.innerHTML = '<div class="error">Failed to load: ' + escapeHtml(err.message) + '</div>';
+  }
+}
+
+function render(data) {
+  const content = document.getElementById('content');
+
+  // Group submissions by email (latest only)
+  const subByEmail = {};
+  data.submissions.forEach(s => {
+    const email = String(s.Email || '').toLowerCase();
+    if (!email) return;
+    if (!subByEmail[email] || new Date(s.Timestamp) > new Date(subByEmail[email].Timestamp)) {
+      subByEmail[email] = s;
+    }
+  });
+
+  // Group managers by team, tracking submission status
+  const teams = {};
+  data.managers.forEach(m => {
+    const email = String(m.email || '').toLowerCase();
+    if (!teams[m.team]) teams[m.team] = { submitted: [], missing: [] };
+    if (subByEmail[email]) {
+      teams[m.team].submitted.push({ ...m, submission: subByEmail[email] });
+    } else {
+      teams[m.team].missing.push(m);
+    }
+  });
+
+  let totalSub = 0, totalAll = 0;
+  Object.values(teams).forEach(t => { totalSub += t.submitted.length; totalAll += t.submitted.length + t.missing.length; });
+
+  const dateLabel = formatDate(data.asOf);
+  const isAllIn = totalSub === totalAll;
+  let html = `
+    <div class="hero">
+      <h1>Weekly Pulse</h1>
+      <div class="meta">${escapeHtml(dateLabel)} ¬∑ Caf√© 1:30 ¬∑ Market 2:00</div>
+      <div class="count ${isAllIn ? 'good' : 'warn'}">
+        <span class="num">${totalSub}</span>
+        <span class="total">of ${totalAll} in</span>
+      </div>
+    </div>
+  `;
+
+  const teamOrder = ['Market', 'Caf√©'];
+  teamOrder.forEach(teamName => {
+    if (!teams[teamName]) return;
+    const t = teams[teamName];
+    const teamClass = teamName === 'Caf√©' ? 'cafe' : 'market';
+    const total = t.submitted.length + t.missing.length;
+    const mtg = (data.meetingTimes || {})[teamName] || '';
+    const allIn = t.missing.length === 0;
+    html += `
+      <div class="team-block">
+        <div class="team-head">
+          <span class="team-name ${teamClass}">${escapeHtml(teamName)}</span>
+          <span class="team-time">// ${escapeHtml(mtg)}</span>
+          <span class="team-count ${allIn ? 'good' : 'warn'}">${t.submitted.length}/${total}</span>
+        </div>
+    `;
+
+    // Submitted first
+    t.submitted.forEach((m, idx) => {
+      const sub = m.submission;
+      const cardId = `card-${teamClass}-${idx}`;
+      html += `
+        <div class="mgr-card submitted" id="${cardId}">
+          <div class="mgr-row" data-target="${cardId}">
+            <span class="mgr-status ok">‚úì</span>
+            <span class="mgr-name">${escapeHtml(m.name)}</span>
+            <span class="mgr-source">${sub.Source === 'form' ? '¬∑ form' : '¬∑ email'}</span>
+            <span class="mgr-toggle">‚Ä∫</span>
+          </div>
+          <div class="mgr-body">
+            ${Object.keys(Q_LABELS).map(k => {
+              const v = sub[k];
+              const empty = isEmpty(v);
+              return `<div class="answer ${empty ? 'empty' : ''}">
+                <div class="answer-label">${Q_LABELS[k]}</div>
+                <div class="answer-text">${empty ? '‚Äî blank ‚Äî' : escapeHtml(v)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    // Missing rows
+    t.missing.forEach(m => {
+      html += `
+        <div class="mgr-card missing">
+          <div class="mgr-row">
+            <span class="mgr-status no">‚úó</span>
+            <span class="mgr-name">${escapeHtml(m.name)}</span>
+            <span class="mgr-source">¬∑ missing</span>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
+
+  content.innerHTML = html;
+
+  // Wire up expand-on-tap for submitted cards
+  document.querySelectorAll('.mgr-card.submitted .mgr-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const card = row.closest('.mgr-card');
+      card.classList.toggle('open');
+    });
+  });
+}
+
+document.getElementById('refresh').addEventListener('click', load);
+
+// Initial load + auto-refresh every 90 seconds
+load();
+setInterval(load, 90000);
+</script>
+</body>
+</html>
