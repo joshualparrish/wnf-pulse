@@ -207,15 +207,15 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbyP6zcOGc6WgJ_OmLGocHvX
 const TOKEN = 'ce2c723acf315c63137138196d25aa1e';
 
 const Q_LABELS = {
-  Q1_Star: 'Q1 &middot; STAR',
-  Q2_Drifter: 'Q2 &middot; DRIFTER',
-  Q3_Customer: 'Q3 &middot; CUSTOMER',
-  Q4_Experiment: 'Q4 &middot; EXPERIMENT',
-  Q5_SystemFail: 'Q5 &middot; SYSTEM FAIL',
-  Q6_Commitment_Status: 'Q6a &middot; LAST COMMITMENT',
-  Q6_Commitment_Notes: 'Q6b &middot; NOTES',
-  Q7_Avoiding: 'Q7 &middot; AVOIDING',
-  Q8_NextCommitment: 'Q8 &middot; NEXT COMMITMENT',
+  Q1_Star: 'Q1 \u00b7 STAR',
+  Q2_Drifter: 'Q2 \u00b7 DRIFTER',
+  Q3_Customer: 'Q3 \u00b7 CUSTOMER',
+  Q4_Experiment: 'Q4 \u00b7 EXPERIMENT',
+  Q5_SystemFail: 'Q5 \u00b7 SYSTEM FAIL',
+  Q6_Commitment_Status: 'Q6a \u00b7 LAST COMMITMENT',
+  Q6_Commitment_Notes: 'Q6b \u00b7 NOTES',
+  Q7_Avoiding: 'Q7 \u00b7 AVOIDING',
+  Q8_NextCommitment: 'Q8 \u00b7 NEXT COMMITMENT',
 };
 
 function escapeHtml(s) {
@@ -237,7 +237,7 @@ function formatDate(iso) {
 
 async function load() {
   const content = document.getElementById('content');
-  content.innerHTML = '<div class="loading">Loading the pulse&hellip;</div>';
+  content.innerHTML = '<div class="loading">Loading the pulse\u2026</div>';
 
   try {
     const url = API_URL + '?action=list&token=' + encodeURIComponent(TOKEN) + '&_=' + Date.now();
@@ -283,7 +283,7 @@ function render(data) {
   let html = `
     <div class="hero">
       <h1>Weekly Pulse</h1>
-      <div class="meta">${escapeHtml(dateLabel)} &middot; Caf&#233; 1:30 &middot; Market 2:00</div>
+      <div class="meta">${escapeHtml(dateLabel)} \u00b7 Caf\u00e9 1:30 \u00b7 Market 2:00</div>
       <div class="count ${isAllIn ? 'good' : 'warn'}">
         <span class="num">${totalSub}</span>
         <span class="total">of ${totalAll} in</span>
@@ -291,11 +291,11 @@ function render(data) {
     </div>
   `;
 
-  const teamOrder = ['Market', 'Caf&#233;'];
+  const teamOrder = ['Market', 'Caf\u00e9'];
   teamOrder.forEach(teamName => {
     if (!teams[teamName]) return;
     const t = teams[teamName];
-    const teamClass = teamName === 'Caf&#233;' ? 'cafe' : 'market';
+    const teamClass = teamName === 'Caf\u00e9' ? 'cafe' : 'market';
     const total = t.submitted.length + t.missing.length;
     const mtg = (data.meetingTimes || {})[teamName] || '';
     const allIn = t.missing.length === 0;
@@ -315,10 +315,10 @@ function render(data) {
       html += `
         <div class="mgr-card submitted" id="${cardId}">
           <div class="mgr-row" data-target="${cardId}">
-            <span class="mgr-status ok">&#10003;</span>
+            <span class="mgr-status ok">\u2713</span>
             <span class="mgr-name">${escapeHtml(m.name)}</span>
-            <span class="mgr-source">${sub.Source === 'form' ? '&middot; form' : '&middot; email'}</span>
-            <span class="mgr-toggle">&rsaquo;</span>
+            <span class="mgr-source">${sub.Source === 'form' ? '\u00b7 form' : '\u00b7 email'}</span>
+            <span class="mgr-toggle">\u203a</span>
           </div>
           <div class="mgr-body">
             ${Object.keys(Q_LABELS).map(k => {
@@ -326,7 +326,7 @@ function render(data) {
               const empty = isEmpty(v);
               return `<div class="answer ${empty ? 'empty' : ''}">
                 <div class="answer-label">${Q_LABELS[k]}</div>
-                <div class="answer-text">${empty ? '&mdash; blank &mdash;' : escapeHtml(v)}</div>
+                <div class="answer-text">${empty ? '\u2014 blank \u2014' : escapeHtml(v)}</div>
               </div>`;
             }).join('')}
           </div>
@@ -339,9 +339,9 @@ function render(data) {
       html += `
         <div class="mgr-card missing">
           <div class="mgr-row">
-            <span class="mgr-status no">&#10007;</span>
+            <span class="mgr-status no">\u2717</span>
             <span class="mgr-name">${escapeHtml(m.name)}</span>
-            <span class="mgr-source">&middot; missing</span>
+            <span class="mgr-source">\u00b7 missing</span>
           </div>
         </div>
       `;
