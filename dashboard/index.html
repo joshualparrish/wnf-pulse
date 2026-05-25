@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>WNF Pulse Dashboard</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff2bd6'/%3E%3Cstop offset='1' stop-color='%23b026ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Cpath d='M6 34h13l5-15 8 30 6-17h20' fill='none' stroke='url(%23g)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff2bd6'/%3E%3Cstop offset='1' stop-color='%23b026ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Cpath d='M6 34h13l5-15 8 30 6-17h20' fill='none' stroke='url(%23g)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -262,7 +262,7 @@ function renderLock(msg) {
     '<div class="hero" style="text-align:center;">' +
       '<h1>Locked</h1>' +
       '<div class="meta">Enter the passcode to view the pulse</div>' +
-      (msg ? '<div style="color:var(--red);font-size:12px;margin-top:8px;font-family:\'JetBrains Mono\',monospace;">' + escapeHtml(msg) + '</div>' : '') +
+      (msg ? '<div style="color:var(--red);font-size:12px;margin-top:8px;font-family:\\'JetBrains Mono\\',monospace;">' + escapeHtml(msg) + '</div>' : '') +
       '<div style="margin-top:16px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;">' +
         '<input id="passInput" class="lock-input" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode">' +
         '<button id="passBtn" class="lock-btn">Unlock</button>' +
@@ -389,7 +389,7 @@ function render(data) {
           <div class="mgr-row">
             <span class="mgr-status no">✗</span>
             <span class="mgr-name">${escapeHtml(m.name)}</span>
-            <span class="mgr-source">· missing</span>
+            <span class="mgr-source">·· missing</span>
           </div>
         </div>
       `;
