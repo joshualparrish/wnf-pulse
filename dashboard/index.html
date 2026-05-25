@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>WNF Pulse Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff2bd6'/%3E%3Cstop offset='1' stop-color='%23b026ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Cpath d='M6 34h13l5-15 8 30 6-17h20' fill='none' stroke='url(%23g)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff2bd6'/%3E%3Cstop offset='1' stop-color='%23b026ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Cpath d='M6 34h13l5-15 8 30 6-17h20' fill='none' stroke='url(%23g)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#05060a">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff2bd6%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23b026ff%22/%3E%3C/linearGradient%3E%3CradialGradient%20id%3D%22glow%22%20cx%3D%220.72%22%20cy%3D%220.26%22%20r%3D%220.85%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b026ff%22%20stop-opacity%3D%220.30%22/%3E%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%23ff2bd6%22%20stop-opacity%3D%220.10%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2305060a%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%3Cfilter%20id%3D%22soft%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20stdDeviation%3D%223.2%22/%3E%3C/filter%3E%3C/defs%3E%3C%21--%20base%20tile%20--%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22%2305060a%22/%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url%28%23glow%29%22/%3E%3Crect%20x%3D%221.5%22%20y%3D%221.5%22%20width%3D%22177%22%20height%3D%22177%22%20rx%3D%2238.5%22%20fill%3D%22none%22%20stroke%3D%22%231d2230%22%20stroke-width%3D%223%22/%3E%3C%21--%20pulse%20glow%20underlay%20--%3E%3Cpolyline%20points%3D%2226%2C92%2058%2C92%2072%2C58%2090%2C124%20106%2C80%20120%2C92%20154%2C92%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%2213%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%0A%20%20%20%20%20%20%20%20%20%20%20%20opacity%3D%220.55%22%20filter%3D%22url%28%23soft%29%22/%3E%3C%21--%20crisp%20pulse%20line%20--%3E%3Cpolyline%20points%3D%2226%2C92%2058%2C92%2072%2C58%2090%2C124%20106%2C80%20120%2C92%20154%2C92%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%228%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C%21--%20leading%20node%20--%3E%3Ccircle%20cx%3D%22154%22%20cy%3D%2292%22%20r%3D%227.5%22%20fill%3D%22%23ff2bd6%22%20/%3E%3Ccircle%20cx%3D%22154%22%20cy%3D%2292%22%20r%3D%2213%22%20fill%3D%22%23ff2bd6%22%20opacity%3D%220.30%22%20filter%3D%22url%28%23soft%29%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -172,6 +173,20 @@
   }
   .error { border-color: var(--red); color: var(--red); }
 
+  .lock-input {
+    background: var(--bg-2); border: 1px solid var(--panel-edge);
+    color: var(--ink); padding: 12px 14px; border-radius: 8px;
+    font-size: 16px; width: 170px; text-align: center;
+    font-family: "JetBrains Mono", monospace; letter-spacing: 0.25em;
+  }
+  .lock-input:focus { outline: none; border-color: var(--magenta); }
+  .lock-btn {
+    padding: 12px 20px; background: var(--grad-cta); color: #fff;
+    border: none; border-radius: 8px; cursor: pointer;
+    font-family: "Archivo Black", Impact, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 13px;
+  }
+
   .footer {
     margin-top: 18px; text-align: center;
     color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
@@ -198,25 +213,30 @@
   </div>
 
   <div class="footer">
-    // Live data from WNF Pulse Tracker &middot; pull-to-refresh
+    // Live data from WNF Pulse Tracker &middot; passcode-protected
   </div>
 
 </div>
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbyP6zcOGc6WgJ_OmLGocHvXKCW7u7xFbGRzVDqd_50v0DsqlTR13IcjVXvitZWn9lOU/exec';
-const TOKEN = 'ce2c723acf315c63137138196d25aa1e';
+// No secret is stored in this page. The viewer enters a passcode, which is held
+// only in this browser tab (sessionStorage) and checked by the Apps Script endpoint.
+const PASS_KEY = 'wnf_pulse_pass';
+function getPass() { try { return sessionStorage.getItem(PASS_KEY) || ''; } catch (e) { return ''; } }
+function setPass(v) { try { sessionStorage.setItem(PASS_KEY, v); } catch (e) {} }
+function clearPass() { try { sessionStorage.removeItem(PASS_KEY); } catch (e) {} }
 
 const Q_LABELS = {
-  Q1_Star: 'Q1 \u00b7 STAR',
-  Q2_Drifter: 'Q2 \u00b7 DRIFTER',
-  Q3_Customer: 'Q3 \u00b7 CUSTOMER',
-  Q4_Experiment: 'Q4 \u00b7 EXPERIMENT',
-  Q5_SystemFail: 'Q5 \u00b7 SYSTEM FAIL',
-  Q6_Commitment_Status: 'Q6a \u00b7 LAST COMMITMENT',
-  Q6_Commitment_Notes: 'Q6b \u00b7 NOTES',
-  Q7_Avoiding: 'Q7 \u00b7 AVOIDING',
-  Q8_NextCommitment: 'Q8 \u00b7 NEXT COMMITMENT',
+  Q1_Star: 'Q1 · STAR',
+  Q2_Drifter: 'Q2 · DRIFTER',
+  Q3_Customer: 'Q3 · CUSTOMER',
+  Q4_Experiment: 'Q4 · EXPERIMENT',
+  Q5_SystemFail: 'Q5 · SYSTEM FAIL',
+  Q6_Commitment_Status: 'Q6a · LAST COMMITMENT',
+  Q6_Commitment_Notes: 'Q6b · NOTES',
+  Q7_Avoiding: 'Q7 · AVOIDING',
+  Q8_NextCommitment: 'Q8 · NEXT COMMITMENT',
 };
 
 function escapeHtml(s) {
@@ -236,15 +256,44 @@ function formatDate(iso) {
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
+function renderLock(msg) {
+  const content = document.getElementById('content');
+  content.innerHTML =
+    '<div class="hero" style="text-align:center;">' +
+      '<h1>Locked</h1>' +
+      '<div class="meta">Enter the passcode to view the pulse</div>' +
+      (msg ? '<div style="color:var(--red);font-size:12px;margin-top:8px;font-family:\'JetBrains Mono\',monospace;">' + escapeHtml(msg) + '</div>' : '') +
+      '<div style="margin-top:16px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;">' +
+        '<input id="passInput" class="lock-input" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode">' +
+        '<button id="passBtn" class="lock-btn">Unlock</button>' +
+      '</div>' +
+    '</div>';
+  const inp = document.getElementById('passInput');
+  const go = function () {
+    const v = (inp.value || '').trim();
+    if (!v) return;
+    setPass(v);
+    load();
+  };
+  document.getElementById('passBtn').addEventListener('click', go);
+  inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+  inp.focus();
+}
+
 async function load() {
   const content = document.getElementById('content');
-  content.innerHTML = '<div class="loading">Loading the pulse\u2026</div>';
+  const pass = getPass();
+  if (!pass) { renderLock(); return; }
+  content.innerHTML = '<div class="loading">Loading the pulse…</div>';
 
   try {
-    const url = API_URL + '?action=list&token=' + encodeURIComponent(TOKEN) + '&_=' + Date.now();
+    const url = API_URL + '?action=list&pass=' + encodeURIComponent(pass) + '&_=' + Date.now();
     const res = await fetch(url, { method: 'GET', redirect: 'follow' });
     const data = await res.json();
-    if (!data.ok) throw new Error(data.error || 'API error');
+    if (!data.ok) {
+      if (/passcode/i.test(data.error || '')) { clearPass(); renderLock('Wrong passcode — try again.'); return; }
+      throw new Error(data.error || 'API error');
+    }
     render(data);
   } catch (err) {
     content.innerHTML = '<div class="error">Failed to load: ' + escapeHtml(err.message) + '</div>';
@@ -284,7 +333,7 @@ function render(data) {
   let html = `
     <div class="hero">
       <h1>Weekly Pulse</h1>
-      <div class="meta">${escapeHtml(dateLabel)} \u00b7 Caf\u00e9 1:30 \u00b7 Market 2:00</div>
+      <div class="meta">${escapeHtml(dateLabel)} · Café 1:30 · Market 2:00</div>
       <div class="count ${isAllIn ? 'good' : 'warn'}">
         <span class="num">${totalSub}</span>
         <span class="total">of ${totalAll} in</span>
@@ -292,11 +341,11 @@ function render(data) {
     </div>
   `;
 
-  const teamOrder = ['Market', 'Caf\u00e9'];
+  const teamOrder = ['Market', 'Café'];
   teamOrder.forEach(teamName => {
     if (!teams[teamName]) return;
     const t = teams[teamName];
-    const teamClass = teamName === 'Caf\u00e9' ? 'cafe' : 'market';
+    const teamClass = teamName === 'Café' ? 'cafe' : 'market';
     const total = t.submitted.length + t.missing.length;
     const mtg = (data.meetingTimes || {})[teamName] || '';
     const allIn = t.missing.length === 0;
@@ -309,17 +358,16 @@ function render(data) {
         </div>
     `;
 
-    // Submitted first
     t.submitted.forEach((m, idx) => {
       const sub = m.submission;
       const cardId = `card-${teamClass}-${idx}`;
       html += `
         <div class="mgr-card submitted" id="${cardId}">
           <div class="mgr-row" data-target="${cardId}">
-            <span class="mgr-status ok">\u2713</span>
+            <span class="mgr-status ok">✓</span>
             <span class="mgr-name">${escapeHtml(m.name)}</span>
-            <span class="mgr-source">${sub.Source === 'form' ? '\u00b7 form' : '\u00b7 email'}</span>
-            <span class="mgr-toggle">\u203a</span>
+            <span class="mgr-source">${sub.Source === 'form' ? '· form' : '· email'}</span>
+            <span class="mgr-toggle">›</span>
           </div>
           <div class="mgr-body">
             ${Object.keys(Q_LABELS).map(k => {
@@ -327,7 +375,7 @@ function render(data) {
               const empty = isEmpty(v);
               return `<div class="answer ${empty ? 'empty' : ''}">
                 <div class="answer-label">${Q_LABELS[k]}</div>
-                <div class="answer-text">${empty ? '\u2014 blank \u2014' : escapeHtml(v)}</div>
+                <div class="answer-text">${empty ? '— blank —' : escapeHtml(v)}</div>
               </div>`;
             }).join('')}
           </div>
@@ -335,14 +383,13 @@ function render(data) {
       `;
     });
 
-    // Missing rows
     t.missing.forEach(m => {
       html += `
         <div class="mgr-card missing">
           <div class="mgr-row">
-            <span class="mgr-status no">\u2717</span>
+            <span class="mgr-status no">✗</span>
             <span class="mgr-name">${escapeHtml(m.name)}</span>
-            <span class="mgr-source">\u00b7 missing</span>
+            <span class="mgr-source">· missing</span>
           </div>
         </div>
       `;
@@ -353,7 +400,6 @@ function render(data) {
 
   content.innerHTML = html;
 
-  // Wire up expand-on-tap for submitted cards
   document.querySelectorAll('.mgr-card.submitted .mgr-row').forEach(row => {
     row.addEventListener('click', () => {
       const card = row.closest('.mgr-card');
